@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Spin the wheel BABBY 💖</title>
+<title>Spin the Babby 💖</title>
 
 <style>
 body {
@@ -78,7 +78,7 @@ button {
 <div id="wheel"></div>
 <button onclick="spin()">SPIN 💫</button>
 
-<div id="result"></div> 
+<div id="result"></div>
 
 <!-- Sounds -->
 <audio id="spinSound">
@@ -91,15 +91,14 @@ button {
 </audio>
 
 <script>
-<script>
 let prizes = [
 "💋 Bubbu, ek sweet kiss pending che… redeem soon 😘",
 "😂 Tare mane taro cutest selfie mokalvo padse 😄",
 "🤗 Tight virtual hug — squeezeeee bubbu!",
 "💌 Tu maro dil no permanent malik che ❤️",
 "😏 Aaje tane ek romantic secret message moklu chu… ready?",
-"📞 Sp**m Shot video — no excuses bubbu 😜",
-"🥺 B***ies/Tw**k video as you want  💕"
+"📞 Sp**m shot video — no excuses bubbu 😜",
+"🥺 B***ies/Tw**k video 💕"
 ];
 
 let jackpotMessage = "🎉 JACKPOT! Bubbu, tane lifetime unlimited hugs + kisses mali gaya 😍❤️";
@@ -112,6 +111,17 @@ document.body.addEventListener("click", () => {
 }, { once:true });
 
 function spin() {
+
+    // Spin limit per day
+    const today = new Date().toDateString();
+    const lastSpin = localStorage.getItem("lastSpin");
+
+    if(lastSpin === today){
+        alert("😜 Aaje no spin already use thai gayo bubbu! Kale again try karo ❤️");
+        return;
+    }
+
+    localStorage.setItem("lastSpin", today);
 
     // Mobile vibration
     if(navigator.vibrate){
@@ -151,11 +161,5 @@ function createHearts(){
 }
 </script>
 
-</script>
-
 </body>
 </html>
-
-
-
-
