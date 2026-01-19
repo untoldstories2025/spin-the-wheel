@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For My Bubbu 💖</title>
+
+<style>
+body {
+    background: linear-gradient(135deg, #ff4d6d, #ffb3c1, #ffd6e0);
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    padding-top: 30px;
+}
+
+h1 {
+    color: white;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+p {
+    color: white;
+}
+
+#wheel {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 12px solid white;
+    margin: 30px auto;
+    background: conic-gradient(
+        #ff5f7e 0deg 60deg,
+        #ff9671 60deg 120deg,
+        #ffc75f 120deg 180deg,
+        #845ec2 180deg 240deg,
+        #4d96ff 240deg 300deg,
+        #00c9a7 300deg 360deg
+    );
+    transition: transform 3.5s cubic-bezier(.17,.67,.39,1.2);
+}
+
+button {
+    padding: 12px 28px;
+    background: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+#result {
+    margin-top: 25px;
+    font-size: 20px;
+    color: white;
+    min-height: 40px;
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-110vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎡 Bubbu’s Love Wheel 🎡</h1>
+<p>Spin karo ane surprise unlock karo 😏❤️</p>
+
+<div id="wheel"></div>
+<button onclick="spin()">SPIN 💫</button>
+
+<div id="result"></div>
+
+<!-- Sound -->
+<audio id="spinSound">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-wheel-spin-2069.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let prizes = [
+"💋 Bubbu, ek sweet kiss pending che… redeem soon 😘",
+"😂 Tare mane taro cutest selfie mokalvo padse 😄",
+"🤗 Tight virtual hug — squeezeeee bubbu!",
+"💌 Tu maro dil no permanent malik che ❤️",
+"😏 Aaje tane ek romantic secret message moklu chu… ready?",
+"📞 Long call tonight — no excuses bubbu 😜",
+"🥺 Mane tari bau yaad ave che… jaldi maliye pls 💕"
+];
+
+let rotation = 0;
+
+function spin() {
+    document.getElementById("spinSound").play();
+
+    let randomDeg = Math.floor(3600 + Math.random() * 360);
+    rotation += randomDeg;
+    document.getElementById("wheel").style.transform = `rotate(${rotation}deg)`;
+
+    let selected = prizes[Math.floor(Math.random() * prizes.length)];
+
+    setTimeout(() => {
+        document.getElementById("result").innerText = selected;
+        createHearts();
+    }, 3500);
+}
+
+// floating hearts effect
+function createHearts(){
+    for(let i=0;i<12;i++){
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (14 + Math.random()*25) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(()=> heart.remove(), 6000);
+    }
+}
+</script>
+
+</body>
+</html>
