@@ -8,7 +8,8 @@ body {
     background: linear-gradient(135deg, #ff4d6d, #ffb3c1, #ffd6e0);
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
-    padding-top: 30px;
+    padding-top: 25px;
+    overflow: hidden;
 }
 
 h1 {
@@ -25,7 +26,7 @@ p {
     height: 260px;
     border-radius: 50%;
     border: 12px solid white;
-    margin: 30px auto;
+    margin: 25px auto;
     background: conic-gradient(
         #ff5f7e 0deg 60deg,
         #ff9671 60deg 120deg,
@@ -38,7 +39,7 @@ p {
 }
 
 button {
-    padding: 12px 28px;
+    padding: 12px 30px;
     background: white;
     border: none;
     border-radius: 30px;
@@ -47,10 +48,10 @@ button {
 }
 
 #result {
-    margin-top: 25px;
+    margin-top: 20px;
     font-size: 20px;
     color: white;
-    min-height: 40px;
+    min-height: 45px;
 }
 
 /* Floating hearts */
@@ -72,16 +73,21 @@ button {
 <body>
 
 <h1>🎡 Bubbu’s Love Wheel 🎡</h1>
-<p>Spin karo ane surprise unlock karo 😏❤️</p>
+<p>Roz sirf ek spin allowed che 😏❤️</p>
 
 <div id="wheel"></div>
 <button onclick="spin()">SPIN 💫</button>
 
 <div id="result"></div>
 
-<!-- Sound -->
+<!-- Sounds -->
 <audio id="spinSound">
   <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-wheel-spin-2069.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Background romantic music -->
+<audio id="bgMusic" loop>
+  <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-piano-melody-602.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -91,20 +97,48 @@ let prizes = [
 "🤗 Tight virtual hug — squeezeeee bubbu!",
 "💌 Tu maro dil no permanent malik che ❤️",
 "😏 Aaje tane ek romantic secret message moklu chu… ready?",
-"📞 Long call tonight — no excuses bubbu 😜",
-"🥺 Mane tari bau yaad ave che… jaldi maliye pls 💕"
+"📞 A sperm shot video — no excuses bubbu 😜",
+"🥺 Boobies photo 💕"
 ];
+
+let jackpotMessage = "🎉 JACKPOT! Bubbu, tane lifetime unlimited hugs + kisses mali gaya 😍❤️";
 
 let rotation = 0;
 
+// Play background music after first interaction (browser rule)
+document.body.addEventListener("click", () => {
+    document.getElementById("bgMusic").play().catch(()=>{});
+}, { once:true });
+
 function spin() {
+
+    // Spin limit per day
+    const today = new Date().toDateString();
+    const lastSpin = localStorage.getItem("lastSpin");
+
+    if(lastSpin === today){
+        alert("😜 Aaje no spin already use thai gayo bubbu! Try again tomorrow ❤️");
+        return;
+    }
+
+    localStorage.setItem("lastSpin", today);
+
+    // Mobile vibration
+    if(navigator.vibrate){
+        navigator.vibrate([200,100,200]);
+    }
+
     document.getElementById("spinSound").play();
 
     let randomDeg = Math.floor(3600 + Math.random() * 360);
     rotation += randomDeg;
     document.getElementById("wheel").style.transform = `rotate(${rotation}deg)`;
 
-    let selected = prizes[Math.floor(Math.random() * prizes.length)];
+    // Jackpot chance
+    let isJackpot = Math.random() < 0.15; // 15% chance
+    let selected = isJackpot 
+        ? jackpotMessage 
+        : prizes[Math.floor(Math.random() * prizes.length)];
 
     setTimeout(() => {
         document.getElementById("result").innerText = selected;
@@ -112,9 +146,9 @@ function spin() {
     }, 3500);
 }
 
-// floating hearts effect
+// Floating hearts effect
 function createHearts(){
-    for(let i=0;i<12;i++){
+    for(let i=0;i<15;i++){
         let heart = document.createElement("div");
         heart.className = "heart";
         heart.innerHTML = "❤️";
