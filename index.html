@@ -75,10 +75,10 @@ button {
 <h1>🎡 Bubbu’s Love Wheel 🎡</h1>
 <p>Roje khali ek spin allowed che 😏❤️</p>
 
-/*<div id="wheel"></div>
+<div id="wheel"></div>
 <button onclick="spin()">SPIN 💫</button>
 
-<div id="result"></div> */
+<div id="result"></div> 
 
 <!-- Sounds -->
 <audio id="spinSound">
@@ -110,18 +110,7 @@ document.body.addEventListener("click", () => {
     document.getElementById("bgMusic").play().catch(()=>{});
 }, { once:true });
 
-function spin() {
 
-    // Spin limit per day
-    const today = new Date().toDateString();
-    const lastSpin = localStorage.getItem("lastSpin");
-
-    if(lastSpin === today){
-        alert("😜 Aaje no spin already use thai gayo bubbu! Try again tomorrow ❤️");
-        return;
-    }
-
-    localStorage.setItem("lastSpin", today);
 
     // Mobile vibration
     if(navigator.vibrate){
@@ -163,5 +152,6 @@ function createHearts(){
 
 </body>
 </html>
+
 
 
